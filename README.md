@@ -5,6 +5,7 @@
 - Python > 3.6
 - numpy
 - scipy
+- sympy
 - matplotlib
 - Jupyter Notebook （可选）
 
@@ -21,3 +22,4 @@ ChapterN
 ```
 
 某些中间结果直接以 Jupyter Notebook 返回值的形式呈现，故直接运行 Python 代码可能无法看到完整过程，建议使用 Jupyter Notebook 打开以获得最佳体验。
+
