@@ -1,0 +1,680 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{ctexart}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Chapter5}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+	\title{数值分析实验五}
+	\author{计63\,\,陈晟祺\,\,2016010981}
+    
+    \maketitle
+    
+    
+    \subsection{上机题1}\label{ux4e0aux673aux98981}
+
+\subsubsection{实验概述}\label{ux5b9eux9a8cux6982ux8ff0}
+
+本实验要求用幂法求矩阵模最大的特征值 \(\lambda_1\) 和其对应的特征向量
+\(\mathbf{x}_1\)，并控制迭代前后误差小于 \(10^{-5}\)。
+
+\subsubsection{实验过程}\label{ux5b9eux9a8cux8fc7ux7a0b}
+
+幂法的实现比较简单，只需按照算法5.1描述的规则进行迭代即可。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{k}{def} \PY{n+nf}{power\PYZus{}method}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+            \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{u} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            \PY{n}{l} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{c+c1}{\PYZsh{} iteration for lambda}
+            \PY{k}{while} \PY{k+kc}{True}\PY{p}{:}
+                \PY{n}{v} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{u}\PY{p}{)}
+                \PY{n}{new\PYZus{}l} \PY{o}{=} \PY{n}{v}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{v}\PY{p}{)}\PY{p}{)}\PY{p}{]} \PY{c+c1}{\PYZsh{} approximation of lambda\PYZus{}1}
+                \PY{n}{u} \PY{o}{=} \PY{n}{v} \PY{o}{/} \PY{n}{new\PYZus{}l}
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{new\PYZus{}l} \PY{o}{\PYZhy{}} \PY{n}{l}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1e\PYZhy{}5}\PY{p}{:}
+                    \PY{k}{return} \PY{n}{new\PYZus{}l}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{u}
+                \PY{n}{l} \PY{o}{=} \PY{n}{new\PYZus{}l}
+\end{Verbatim}
+
+
+    使用幂法分别对所给的两个矩阵进行迭代：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        \PY{n}{B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{25}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{41}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{41}\PY{p}{,} \PY{l+m+mi}{68}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{17}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{17}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        
+        \PY{n}{l\PYZus{}a}\PY{p}{,} \PY{n}{x\PYZus{}a} \PY{o}{=} \PY{n}{power\PYZus{}method}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+        \PY{n}{l\PYZus{}b}\PY{p}{,} \PY{n}{x\PYZus{}b} \PY{o}{=} \PY{n}{power\PYZus{}method}\PY{p}{(}\PY{n}{B}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A has main eigenvalue }\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{ with eigenvector }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{l\PYZus{}a}\PY{p}{,} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{,}\PY{n}{x\PYZus{}a}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{B has main eigenvalue }\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{ with eigenvector }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{l\PYZus{}b}\PY{p}{,} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{,}\PY{n}{x\PYZus{}b}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+A has main eigenvalue 12.25432 with eigenvector ['-0.67402', '1.00000', '-0.88956']
+B has main eigenvalue 98.52170 with eigenvector ['-0.60397', '1.00000', '-0.25114', '0.14895']
+
+    \end{Verbatim}
+
+    使用 numpy 内置函数求值进行比较：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{np\PYZus{}method}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{ref\PYZus{}eig\PYZus{}vec}\PY{p}{)}\PY{p}{:}
+            \PY{n}{w\PYZus{}a}\PY{p}{,} \PY{n}{v\PYZus{}a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{eig}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+            \PY{n}{a\PYZus{}main\PYZus{}pos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{w\PYZus{}a}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} find main eigenvalue}
+            \PY{n}{l\PYZus{}a}\PY{p}{,} \PY{n}{x\PYZus{}a} \PY{o}{=} \PY{n}{w\PYZus{}a}\PY{p}{[}\PY{n}{a\PYZus{}main\PYZus{}pos}\PY{p}{]}\PY{p}{,} \PY{n}{v\PYZus{}a}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{a\PYZus{}main\PYZus{}pos}\PY{p}{]}
+            \PY{k}{return} \PY{n}{l\PYZus{}a}\PY{p}{,} \PY{n}{x\PYZus{}a} \PY{o}{/} \PY{n}{x\PYZus{}a}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{ref\PYZus{}eig\PYZus{}vec} \PY{o}{==} \PY{l+m+mf}{1.}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]} \PY{c+c1}{\PYZsh{} do the same normalize as power method do}
+        
+        \PY{n}{l\PYZus{}a\PYZus{}n}\PY{p}{,} \PY{n}{x\PYZus{}a\PYZus{}n} \PY{o}{=} \PY{n}{np\PYZus{}method}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{x\PYZus{}a}\PY{p}{)}
+        \PY{n}{l\PYZus{}b\PYZus{}n}\PY{p}{,} \PY{n}{x\PYZus{}b\PYZus{}n} \PY{o}{=} \PY{n}{np\PYZus{}method}\PY{p}{(}\PY{n}{B}\PY{p}{,} \PY{n}{x\PYZus{}b}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A has main eigenvalue }\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{ with eigenvector }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{l\PYZus{}a\PYZus{}n}\PY{p}{,} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{,}\PY{n}{x\PYZus{}a\PYZus{}n}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{B has main eigenvalue }\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{ with eigenvector }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{l\PYZus{}b\PYZus{}n}\PY{p}{,} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{,}\PY{n}{x\PYZus{}b\PYZus{}n}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+A has main eigenvalue 12.25432 with eigenvector ['-0.67402', '1.00000', '-0.88956']
+B has main eigenvalue 98.52170 with eigenvector ['-0.60397', '1.00000', '-0.25114', '0.14895']
+
+    \end{Verbatim}
+
+    求得的主特征值小数点后五位都是一致的，并且当采用同样的归一化系数时，特征向量也是相同的。可见幂法的实现是正确的。
+
+    \subsection{上机题 3}\label{ux4e0aux673aux9898-3}
+
+\subsubsection{实验概述}\label{ux5b9eux9a8cux6982ux8ff0}
+
+本实验要求实现矩阵的 QR 分解，并使用基本的 QR
+算法尝试计算给定矩阵的所有特征值，观察算法的收敛过程并给出解释。
+
+\subsubsection{实验过程}\label{ux5b9eux9a8cux8fc7ux7a0b}
+
+首先使用 Householder 旋转实现矩阵的 QR 分解：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{def} \PY{n+nf}{householder}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+                \PY{n}{sign} \PY{o}{=} \PY{l+m+mi}{1}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{sign} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+            \PY{n}{sigma} \PY{o}{=} \PY{n}{sign} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n+nb}{ord}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+            \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{sigma} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1e\PYZhy{}10}\PY{p}{:}
+                \PY{k}{return} \PY{k+kc}{None}
+            \PY{n}{h} \PY{o}{=} \PY{n}{x}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+            \PY{n}{h}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{sigma}
+            \PY{k}{return} \PY{n}{h}
+            
+        
+        \PY{k}{def} \PY{n+nf}{QR}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+            \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{R} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+            \PY{n}{Q} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{identity}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} get sub\PYZhy{}matrix}
+                \PY{n}{R\PYZus{}1} \PY{o}{=} \PY{n}{R}\PY{p}{[}\PY{n}{i}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{:}\PY{p}{]}
+                \PY{c+c1}{\PYZsh{} householder vector v and w}
+                \PY{n}{v} \PY{o}{=} \PY{n}{householder}\PY{p}{(}\PY{n}{R\PYZus{}1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                \PY{k}{if} \PY{n}{v} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:} \PY{c+c1}{\PYZsh{} go to next submatrix}
+                    \PY{k}{continue}
+                \PY{n}{w} \PY{o}{=} \PY{n}{v} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{v}\PY{p}{,} \PY{n+nb}{ord}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} caculate H and transform Q}
+                \PY{n}{H} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{identity}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+                \PY{n}{H}\PY{p}{[}\PY{n}{i}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{identity}\PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{n}{i}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{w}\PY{p}{,} \PY{n}{w}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                \PY{n}{Q} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{Q}\PY{p}{,} \PY{n}{H}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} use v to calculate transformed R}
+                \PY{n}{beta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{v}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{v}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{n}{i}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{gamma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{v}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{R\PYZus{}1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{j}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+                    \PY{n}{R\PYZus{}1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{j}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{gamma} \PY{o}{/} \PY{n}{beta} \PY{o}{*} \PY{n}{v}
+            \PY{k}{return} \PY{n}{Q}\PY{p}{,} \PY{n}{R}
+\end{Verbatim}
+
+
+    使用 numpy 内置的 QR 分解可以测试算法的正确性：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{1.}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        \PY{n}{Q}\PY{p}{,} \PY{n}{R} \PY{o}{=} \PY{n}{QR}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+        \PY{n}{Q\PYZus{}n}\PY{p}{,} \PY{n}{R\PYZus{}n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{qr}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total Error: }\PY{l+s+si}{\PYZob{}:.3e\PYZcb{}}\PY{l+s+s1}{, Q Error: }\PY{l+s+si}{\PYZob{}:.3e\PYZcb{}}\PY{l+s+s1}{，R Error: }\PY{l+s+si}{\PYZob{}:.3e\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{Q} \PY{o}{*} \PY{n}{R} \PY{o}{\PYZhy{}} \PY{n}{A}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{Q} \PY{o}{\PYZhy{}} \PY{n}{Q\PYZus{}n}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{R} \PY{o}{\PYZhy{}} \PY{n}{R\PYZus{}n}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Total Error: 9.992e-16, Q Error: 2.220e-16，R Error: 8.882e-16
+
+    \end{Verbatim}
+
+    接下来可以实现基本的 QR
+算法求特征值。在判定拟对角阵和求解拟对角阵的特征值时，都需要对对角块为 2
+* 2 矩阵的情况进行特殊处理。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{eps} \PY{o}{=} \PY{l+m+mf}{1e\PYZhy{}5}
+        
+        \PY{c+c1}{\PYZsh{} check if the matrix is quasi\PYZhy{}diagonal}
+        \PY{k}{def} \PY{n+nf}{check\PYZus{}quasi\PYZus{}diag}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+            \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{cond} \PY{o}{=} \PY{n}{A} \PY{o}{\PYZlt{}} \PY{n}{eps}
+            \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{while} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{n}\PY{p}{:}
+                \PY{n}{cond}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{k+kc}{True}
+                \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{cond}\PY{p}{[}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{k+kc}{False}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} 2d\PYZhy{}matrix}
+                    \PY{n}{cond}\PY{p}{[}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{k+kc}{True}
+                    \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{2}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{o+ow}{not} \PY{n}{cond}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]}\PY{p}{:}
+                        \PY{k}{return} \PY{k+kc}{False}
+            \PY{k}{return} \PY{k+kc}{True}
+        
+        \PY{c+c1}{\PYZsh{} find eigenvalues by each block}
+        \PY{k}{def} \PY{n+nf}{derive\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+            \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{eigen} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{dtype}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{complex128}\PY{p}{)}
+            \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{while} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{n}\PY{p}{:}
+                \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{A}\PY{p}{[}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{i}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{eps}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} 2d\PYZhy{}matrix}
+                    \PY{n}{eigen}\PY{p}{[}\PY{n}{i} \PY{p}{:} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{2}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{eig}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{:}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{i}\PY{p}{:}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                    \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{2}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} 1d\PYZhy{}matrix}
+                    \PY{n}{eigen}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{i}\PY{p}{]}
+                    \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{eigen}\PY{p}{,} \PY{n}{decimals}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} basic QR algorithm}
+        \PY{k}{def} \PY{n+nf}{QR\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+            \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{step} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{while} \PY{o+ow}{not} \PY{n}{check\PYZus{}quasi\PYZus{}diag}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} iterate}
+                \PY{n}{Q}\PY{p}{,} \PY{n}{R} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{qr}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+                \PY{n}{A\PYZus{}new} \PY{o}{=} \PY{n}{R} \PY{o}{*} \PY{n}{Q}
+                \PY{n}{step} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                \PY{c+c1}{\PYZsh{} iteration converged}
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{A\PYZus{}new} \PY{o}{\PYZhy{}} \PY{n}{A}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1e\PYZhy{}8}\PY{p}{:}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{QR algorithm converged to non\PYZhy{}quasi\PYZhy{}diagonal matrix after }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ steps, failed to find eigenvalues}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{step}\PY{p}{)}\PY{p}{)}
+                    \PY{k}{return} \PY{k+kc}{None}
+                \PY{n}{A} \PY{o}{=} \PY{n}{A\PYZus{}new}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{QR algorithm found eigenvalues of A after }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ steps}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{step}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{n}{derive\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+
+    对题中给出的矩阵使用 QR 算法：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5} \PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        \PY{n}{l\PYZus{}A} \PY{o}{=} \PY{n}{QR\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+QR algorithm converged to non-quasi-diagonal matrix after 1 steps, failed to find eigenvalues
+
+    \end{Verbatim}
+
+    算法在进行了一步迭代后就失败了，结合代码中的判定条件，可知一步迭代后 A
+没有发生变化，如下所示：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{Q}\PY{p}{,} \PY{n}{R} \PY{o}{=} \PY{n}{QR}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+        \PY{n}{R} \PY{o}{*} \PY{n}{Q}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} matrix([[ 0.5,  0.5,  0.5,  0.5],
+                [ 0.5,  0.5, -0.5, -0.5],
+                [ 0.5, -0.5,  0.5, -0.5],
+                [ 0.5, -0.5, -0.5,  0.5]])
+\end{Verbatim}
+            
+    这是由于 \(\mathbf{A}\) 事实上本身是一个正交矩阵，因此 QR 分解得到的
+\(\mathbf{R}\) 是恒等的（或者只差一个符号），故无法使用基本的 QR
+算法进行迭代寻找特征值。
+
+    \subsection{上机题 4}\label{ux4e0aux673aux9898-4}
+
+\subsubsection{实验概述}\label{ux5b9eux9a8cux6982ux8ff0}
+
+本题要求用带原点位移的 QR
+算法计算第三题中矩阵的特征值，并观察收敛结果，与第三题进行比较。
+
+\subsubsection{实验过程}\label{ux5b9eux9a8cux8fc7ux7a0b}
+
+实现带原点位移的 QR
+算法，并打印每次迭代过程。当每次迭代出一个特征值后，都检查矩阵的（拟）对角性；如果成立则立刻停止迭代。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{print\PYZus{}matrix}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+            \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}: .4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                    
+        
+        \PY{k}{def} \PY{n+nf}{QR\PYZus{}shift\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{n}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{n} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:} \PY{c+c1}{\PYZsh{} initial calling}
+                \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{n}{A} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Original matrix:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{print\PYZus{}matrix}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+            \PY{k}{if} \PY{n}{n} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{1} \PY{o+ow}{or} \PY{n}{check\PYZus{}quasi\PYZus{}diag}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Matrix is already quasi\PYZhy{}diagonal, end iteration}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{k}{return}
+            \PY{c+c1}{\PYZsh{} find the last diagonal element of size n}
+            \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{while} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n}{eps} \PY{o+ow}{or} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{eps}\PY{p}{:}
+                \PY{n}{old\PYZus{}A} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+                \PY{n}{s} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]}
+                \PY{n}{Q}\PY{p}{,} \PY{n}{R} \PY{o}{=} \PY{n}{QR}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{p}{:}\PY{n}{n}\PY{p}{,}\PY{p}{:}\PY{n}{n}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{s} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{identity}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}
+                \PY{n}{A}\PY{p}{[}\PY{p}{:}\PY{n}{n}\PY{p}{,}\PY{p}{:}\PY{n}{n}\PY{p}{]} \PY{o}{=} \PY{n}{R} \PY{o}{*} \PY{n}{Q} \PY{o}{+} \PY{n}{s} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{identity}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+                \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{After iteration }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{count}\PY{p}{)}\PY{p}{)}
+                \PY{n}{print\PYZus{}matrix}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{A} \PY{o}{\PYZhy{}} \PY{n}{old\PYZus{}A}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{eps}\PY{p}{:}
+                    \PY{k}{raise} \PY{n+ne}{Exception}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iteration converged but no more eigenvalue is found}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Shifted QR took }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ steps to find eigenvalue }\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s1}{ of A}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{count}\PY{p}{,} \PY{n}{A}\PY{p}{[}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            \PY{n}{QR\PYZus{}shift\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}
+            \PY{k}{return} \PY{n}{derive\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{a\PYZus{}l\PYZus{}shift} \PY{o}{=} \PY{n}{QR\PYZus{}shift\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Original matrix:
+ 0.5000	 0.5000	 0.5000	 0.5000
+ 0.5000	 0.5000	-0.5000	-0.5000
+ 0.5000	-0.5000	 0.5000	-0.5000
+ 0.5000	-0.5000	-0.5000	 0.5000
+After iteration 1:
+-0.5000	 0.6708	-0.4392	-0.3273
+ 0.6708	 0.7000	 0.1964	 0.1464
+-0.4392	 0.1964	 0.8714	-0.0958
+-0.3273	 0.1464	-0.0958	 0.9286
+After iteration 2:
+-0.9991	-0.0349	 0.0202	-0.0143
+-0.0349	 0.9994	 0.0004	-0.0002
+ 0.0202	 0.0004	 0.9998	 0.0001
+-0.0143	-0.0002	 0.0001	 0.9999
+After iteration 3:
+-1.0000	-0.0000	 0.0000	-0.0000
+-0.0000	 1.0000	 0.0000	-0.0000
+ 0.0000	 0.0000	 1.0000	 0.0000
+-0.0000	-0.0000	 0.0000	 1.0000
+Shifted QR took 3 steps to find eigenvalue 1.0000 of A
+Matrix is already quasi-diagonal, end iteration
+
+    \end{Verbatim}
+
+    可以看到，带原点位移的 QR 算法解决了简单 QR
+算法处理正交矩阵时的问题（因为位移破坏了正交性），仅在三个迭代后就得到了第一个特征值。并且此时矩阵刚好已成为对角矩阵，故所有特征值都已经找到：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{a\PYZus{}l\PYZus{}shift}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} array([-1.+0.j,  1.+0.j,  1.+0.j,  1.+0.j])
+\end{Verbatim}
+            
+    我们还可以使用更多的正交矩阵进行测试，比如下列矩阵有一对共轭复特征值：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.6}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.36}\PY{p}{,} \PY{l+m+mf}{0.48}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.6}\PY{p}{,} \PY{l+m+mf}{0.48}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.64}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         \PY{n}{QR\PYZus{}shift\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Original matrix:
+ 0.0000	-0.8000	-0.6000
+ 0.8000	-0.3600	 0.4800
+ 0.6000	 0.4800	-0.6400
+After iteration 1:
+ 0.0000	-0.9751	-0.2218
+ 0.9751	-0.0492	 0.2162
+ 0.2218	 0.2162	-0.9508
+After iteration 2:
+ 0.0000	-1.0000	-0.0081
+ 1.0000	-0.0001	 0.0081
+ 0.0081	 0.0081	-0.9999
+After iteration 3:
+-0.0000	-1.0000	-0.0000
+ 1.0000	-0.0000	 0.0000
+ 0.0000	 0.0000	-1.0000
+Shifted QR took 3 steps to find eigenvalue -1.0000 of A
+Matrix is already quasi-diagonal, end iteration
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} array([-0.+1.j, -0.-1.j, -1.+0.j])
+\end{Verbatim}
+            
+    可以看到带原点位移的 QR
+算法也顺利地将其迭代成为拟对角矩阵，并且找到了所有的特征值。
+
+    但是书中给出的单位移策略也并非通用的，例如对于下列矩阵，这一策略就无法求得特征值：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         \PY{k}{try}\PY{p}{:}
+             \PY{n}{QR\PYZus{}shift\PYZus{}eigen}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+         \PY{k}{except} \PY{n+ne}{Exception} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{e}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Original matrix:
+ 0.0000	 0.0000	 0.0000	 1.0000
+ 0.0000	 0.0000	 1.0000	 0.0000
+ 0.0000	 1.0000	 0.0000	 0.0000
+ 1.0000	 0.0000	 0.0000	 0.0000
+After iteration 1:
+-0.0000	 0.0000	 0.0000	 1.0000
+ 0.0000	-0.0000	 1.0000	 0.0000
+ 0.0000	 1.0000	-0.0000	 0.0000
+ 1.0000	 0.0000	 0.0000	-0.0000
+Iteration converged but no more eigenvalue is found
+
+    \end{Verbatim}
+
+    \subsection{实验结论}\label{ux5b9eux9a8cux7ed3ux8bba}
+
+本实验中，我实现了求矩阵特征值的三种方法。幂法较为简单，可以快速求出绝对值最大的特征值。简单
+QR 算法和带简单原点位移策略的 QR
+算法都能求所有特征值，且后者的适用范围更广。事实上，如果使用更佳的策略（如双位移），带原点位移的
+QR 算法总是能够收敛到拟三角阵，从而能方便地求出特征值。
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
