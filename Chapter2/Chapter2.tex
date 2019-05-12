@@ -1,0 +1,619 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{ctexart}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Chapter2}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+	\title{数值分析实验二}
+	\author{计63\,\,陈晟祺\,\,2016010981}
+    
+    \maketitle
+    
+
+    \subsection{上机题 2}\label{ux4e0aux673aux9898-2}
+
+\subsubsection{实验概述}\label{ux5b9eux9a8cux6982ux8ff0}
+
+本实验要求实现阻尼牛顿法求解非线性方程，打印迭代过程，并与其他方法求得的解进行验证，并考虑使用与不使用阻尼的效果差别。
+
+\subsubsection{实验过程}\label{ux5b9eux9a8cux8fc7ux7a0b}
+
+首先实现阻尼牛顿法（其中阻尼根据需要选择打开），参数为函数、初始值，输出为求得的解。其中判断阈值（包括残差和误差阈值）选择为
+\(10^{-8}\)，阻尼因子的初始值为 \(\lambda_0=0.9\)，每次阻尼因子减半。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{from} \PY{n+nn}{mpmath} \PY{k}{import} \PY{n}{diff}
+        
+        \PY{k}{def} \PY{n+nf}{newton}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{damp}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
+            \PY{n}{eps} \PY{o}{=} \PY{l+m+mf}{1e\PYZhy{}8}
+            \PY{n}{k} \PY{o}{=} \PY{l+m+mi}{0} \PY{c+c1}{\PYZsh{} iteration step}
+            \PY{n}{l} \PY{o}{=} \PY{l+m+mf}{0.9} \PY{c+c1}{\PYZsh{} initial damp}
+            \PY{n}{x} \PY{o}{=} \PY{n}{last\PYZus{}x} \PY{o}{=} \PY{n}{x0}
+            \PY{k}{while} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n}{eps} \PY{o+ow}{or} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{last\PYZus{}x}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n}{eps}\PY{p}{:}
+                \PY{n}{s} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{float64}\PY{p}{(}\PY{n}{diff}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
+                \PY{n}{last\PYZus{}x} \PY{o}{=} \PY{n}{x}
+                \PY{n}{x} \PY{o}{=} \PY{n}{last\PYZus{}x} \PY{o}{\PYZhy{}} \PY{n}{s}
+                \PY{n}{k} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Step }\PY{l+s+si}{\PYZob{}:2d\PYZcb{}}\PY{l+s+s1}{: s = }\PY{l+s+si}{\PYZob{}:.7f\PYZcb{}}\PY{l+s+s1}{, x = }\PY{l+s+si}{\PYZob{}:.7f\PYZcb{}}\PY{l+s+s1}{, f(x) = }\PY{l+s+si}{\PYZob{}:.7f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                \PY{k}{if} \PY{n}{damp}\PY{p}{:}
+                    \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+                    \PY{k}{while} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{last\PYZus{}x}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{l\PYZus{}n} \PY{o}{=} \PY{n}{l} \PY{o}{*} \PY{p}{(}\PY{l+m+mf}{0.5} \PY{o}{*}\PY{o}{*} \PY{n}{i}\PY{p}{)} \PY{c+c1}{\PYZsh{} lambda\PYZus{}i = l * 2 \PYZca{} i}
+                        \PY{n}{x} \PY{o}{=} \PY{n}{last\PYZus{}x} \PY{o}{\PYZhy{}} \PY{n}{l\PYZus{}n} \PY{o}{*} \PY{n}{s}
+                        \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{} Damp with factor }\PY{l+s+si}{\PYZob{}:.5f\PYZcb{}}\PY{l+s+s1}{, s = }\PY{l+s+si}{\PYZob{}:.7f\PYZcb{}}\PY{l+s+s1}{, x = }\PY{l+s+si}{\PYZob{}:.7f\PYZcb{}}\PY{l+s+s1}{, f(x) = }\PY{l+s+si}{\PYZob{}:.7f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{l\PYZus{}n}\PY{p}{,} \PY{n}{l\PYZus{}n} \PY{o}{*} \PY{n}{s}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{n}{x}
+\end{Verbatim}
+
+
+    定义函数对某个给定的函数进行求解，并与 \texttt{scipy.optimize.root}
+求得的解进行比较：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k}{import} \PY{n}{root}
+        
+        \PY{k}{def} \PY{n+nf}{test\PYZus{}newton}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{x0}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Solving with basic Newton method}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{sol\PYZus{}newton} \PY{o}{=} \PY{n}{newton}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{x0}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Solving with damping Newton method}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{sol\PYZus{}newton\PYZus{}damp} \PY{o}{=} \PY{n}{newton}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+            \PY{n}{sol\PYZus{}root} \PY{o}{=} \PY{n}{root}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{x0}\PY{p}{)}\PY{o}{.}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Newton: }\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s1}{, Newton with damp: }\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s1}{, SciPy: }\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sol\PYZus{}newton}\PY{p}{,} \PY{n}{sol\PYZus{}newton\PYZus{}damp}\PY{p}{,} \PY{n}{sol\PYZus{}root}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Newton error: }\PY{l+s+si}{\PYZob{}:.8\PYZpc{}\PYZcb{}}\PY{l+s+s1}{, Newton with damp error: }\PY{l+s+si}{\PYZob{}:.8\PYZpc{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{p}{(}\PY{n}{sol\PYZus{}newton} \PY{o}{\PYZhy{}} \PY{n}{sol\PYZus{}root}\PY{p}{)} \PY{o}{/} \PY{n}{sol\PYZus{}root}\PY{p}{,} \PY{p}{(}\PY{n}{sol\PYZus{}newton\PYZus{}damp} \PY{o}{\PYZhy{}} \PY{n}{sol\PYZus{}root}\PY{p}{)} \PY{o}{/} \PY{n}{sol\PYZus{}root}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    首先对第一个方程，即 \(f(x)=x^3-x-1,\,\,x_0=0.6\) 进行迭代求解：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{test\PYZus{}newton}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{3} \PY{o}{\PYZhy{}} \PY{n}{x} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{0.6}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Solving with basic Newton method
+Step  1: s = -17.3000000, x = 17.9000000, f(x) = 5716.4390000
+Step  2: s = 5.9531977, x = 11.9468023, f(x) = 1692.1735328
+Step  3: s = 3.9612820, x = 7.9855204, f(x) = 500.2394160
+Step  4: s = 2.6286110, x = 5.3569093, f(x) = 147.3675178
+Step  5: s = 1.7319133, x = 3.6249960, f(x) = 43.0096132
+Step  6: s = 1.1194068, x = 2.5055892, f(x) = 12.2244426
+Step  7: s = 0.6854598, x = 1.8201294, f(x) = 3.2097248
+Step  8: s = 0.3590853, x = 1.4610441, f(x) = 0.6577735
+Step  9: s = 0.1217209, x = 1.3393232, f(x) = 0.0631370
+Step 10: s = 0.0144104, x = 1.3249129, f(x) = 0.0008314
+Step 11: s = 0.0001949, x = 1.3247180, f(x) = 0.0000002
+Step 12: s = 0.0000000, x = 1.3247180, f(x) = 0.0000000
+Step 13: s = 0.0000000, x = 1.3247180, f(x) = 0.0000000
+
+Solving with damping Newton method
+Step  1: s = -17.3000000, x = 17.9000000, f(x) = 5716.4390000
+- Damp with factor 0.90000, s = -15.5700000, x = 16.1700000, f(x) = 4210.7821130
+- Damp with factor 0.45000, s = -7.7850000, x = 8.3850000, f(x) = 580.1494666
+- Damp with factor 0.22500, s = -3.8925000, x = 4.4925000, f(x) = 85.1776340
+- Damp with factor 0.11250, s = -1.9462500, x = 2.5462500, f(x) = 12.9620794
+- Damp with factor 0.05625, s = -0.9731250, x = 1.5731250, f(x) = 1.3199225
+Step  2: s = 0.2054620, x = 1.3676630, f(x) = 0.1905533
+Step  3: s = 0.0413213, x = 1.3263417, f(x) = 0.0069351
+Step  4: s = 0.0016213, x = 1.3247204, f(x) = 0.0000105
+Step  5: s = 0.0000025, x = 1.3247180, f(x) = 0.0000000
+Step  6: s = 0.0000000, x = 1.3247180, f(x) = 0.0000000
+
+Newton: 1.3247, Newton with damp: 1.3247, SciPy: 1.3247
+Newton error: 0.00000000\%, Newton with damp error: 0.00000000\%
+
+    \end{Verbatim}
+
+    可见阻尼牛顿法所需的迭代步骤明显少于基本牛顿法，而两者的误差都非常小。这是由于本题给定的初值处导数值很小（约为
+\(0.08\)），而函数约为
+\(-0.4\)，因此牛顿法会使用较长的步长，从而导致迭代值偏离零点较多，需要较多的步骤才能重新回到零点附近。而阻尼牛顿法会逐步减少步长，使得迭代后的函数与零的距离总是减少的，因此限制了迭代偏离的程度，使迭代更快收敛。
+
+    而后对第二个方程，即 \(f(x)=-x^3+5x,\,\,x_0=1.35\) 进行迭代求解：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{test\PYZus{}newton}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{o}{\PYZhy{}} \PY{n}{x} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{3} \PY{o}{+} \PY{l+m+mi}{5} \PY{o}{*} \PY{n}{x}\PY{p}{,} \PY{l+m+mf}{1.35}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Solving with basic Newton method
+Step  1: s = -9.1756684, x = 10.5256684, f(x) = -1113.5072686
+Step  2: s = 3.4013818, x = 7.1242866, f(x) = -325.9750112
+Step  3: s = 2.2135060, x = 4.9107807, f(x) = -93.8733369
+Step  4: s = 1.3938693, x = 3.5169113, f(x) = -25.9149417
+Step  5: s = 0.8071683, x = 2.7097430, f(x) = -6.3481343
+Step  6: s = 0.3728030, x = 2.3369400, f(x) = -1.0780041
+Step  7: s = 0.0946958, x = 2.2422443, f(x) = -0.0620189
+Step  8: s = 0.0061509, x = 2.2360934, f(x) = -0.0002543
+Step  9: s = 0.0000254, x = 2.2360680, f(x) = -0.0000000
+Step 10: s = 0.0000000, x = 2.2360680, f(x) = -0.0000000
+
+Solving with damping Newton method
+Step  1: s = -9.1756684, x = 10.5256684, f(x) = -1113.5072686
+- Damp with factor 0.90000, s = -8.2581016, x = 9.6081016, f(x) = -838.9373144
+- Damp with factor 0.45000, s = -4.1290508, x = 5.4790508, f(x) = -137.0858384
+- Damp with factor 0.22500, s = -2.0645254, x = 3.4145254, f(x) = -22.7372690
+- Damp with factor 0.11250, s = -1.0322627, x = 2.3822627, f(x) = -1.6084456
+Step  2: s = 0.1337526, x = 2.2485101, f(x) = -0.1254615
+Step  3: s = 0.0123396, x = 2.2361705, f(x) = -0.0010252
+Step  4: s = 0.0001025, x = 2.2360680, f(x) = -0.0000001
+Step  5: s = 0.0000000, x = 2.2360680, f(x) = -0.0000000
+
+Newton: 2.2361, Newton with damp: 2.2361, SciPy: 2.2361
+Newton error: 0.00000000\%, Newton with damp error: 0.00000000\%
+
+    \end{Verbatim}
+
+    同样，阻尼牛顿法有更快的收敛速度，而误差没有区别。原因与前一个方程是类似的，选择的初始值处导数较小且函数值较大，导致牛顿法步长较长，而阻尼过程抑制了过快的偏离。
+
+    \subsubsection{实验结论}\label{ux5b9eux9a8cux7ed3ux8bba}
+
+本实验中，我使用阻尼牛顿法求解非线性方程，并与牛顿法进行比较。看以看出，在较敏感的初始值处（如导数较小的点），使用阻尼牛顿法能够较好地解决牛顿法步长过长的问题，使得迭代过程更快收敛。因此，在这些情况下使用阻尼牛顿法往往是更好的选择。
+
+    \subsection{上机题 3}\label{ux4e0aux673aux9898-3}
+
+\subsubsection{实验概述}\label{ux5b9eux9a8cux6982ux8ff0}
+
+本题要求按照 2.6.3 节实现 \texttt{zeroin}
+算法，并用其求解第一类零阶贝塞尔曲线函数 \(J_0(x)\) 的 10
+个零点，并将零点绘制在函数曲线图上。
+
+\subsubsection{实验过程}\label{ux5b9eux9a8cux8fc7ux7a0b}
+
+首先将 2.6.3 节中 MATLAB 的 \texttt{zeroin} 算法翻译为 Python
+代码。其中需要注意参数类型的转换，否则可能导致计算精度损失。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{eps} \PY{o}{=} \PY{l+m+mf}{1e\PYZhy{}8}
+        
+        \PY{k}{def} \PY{n+nf}{zeroin}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{o}{*}\PY{n}{args}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+            \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{float64}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+            \PY{n}{b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{float64}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+            \PY{n}{F} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{o}{*}\PY{n}{args}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+            \PY{n}{fa} \PY{o}{=} \PY{n}{F}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+            \PY{n}{fb} \PY{o}{=} \PY{n}{F}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+            \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{fa}\PY{p}{)} \PY{o}{==} \PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{fb}\PY{p}{)}\PY{p}{:}
+                \PY{k}{raise} \PY{n+ne}{Exception}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f must have different signs on the two end points of the given interval}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            
+            \PY{n}{c} \PY{o}{=} \PY{n}{a}
+            \PY{n}{fc} \PY{o}{=} \PY{n}{fa}
+            \PY{n}{d} \PY{o}{=} \PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{c}
+            \PY{n}{e} \PY{o}{=} \PY{n}{d}
+            
+            \PY{n}{step} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{while} \PY{o+ow}{not} \PY{n}{fb} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:} \PY{c+c1}{\PYZsh{} main loop}
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{fa}\PY{p}{)} \PY{o}{==} \PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{fb}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} make f change sign}
+                    \PY{n}{a} \PY{o}{=} \PY{n}{c}\PY{p}{;} \PY{n}{fa} \PY{o}{=} \PY{n}{fc}\PY{p}{;} \PY{n}{d} \PY{o}{=} \PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{c}\PY{p}{;} \PY{n}{e} \PY{o}{=} \PY{n}{d}
+                
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{fa}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{fb}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} swap a, b}
+                    \PY{n}{c} \PY{o}{=} \PY{n}{b}\PY{p}{;} \PY{n}{b} \PY{o}{=} \PY{n}{a}\PY{p}{;} \PY{n}{a} \PY{o}{=} \PY{n}{c}
+                    \PY{n}{fc} \PY{o}{=} \PY{n}{fb}\PY{p}{;} \PY{n}{fb} \PY{o}{=} \PY{n}{fa}\PY{p}{;} \PY{n}{fa} \PY{o}{=} \PY{n}{fc}
+                
+                \PY{n}{m} \PY{o}{=} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{p}{(}\PY{n}{a} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}
+                \PY{n}{tol} \PY{o}{=} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{eps} \PY{o}{*} \PY{n+nb}{max}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{b}\PY{p}{)}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}
+                
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{m}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{tol} \PY{o+ow}{or} \PY{n}{fb} \PY{o}{==} \PY{l+m+mf}{0.0}\PY{p}{:} \PY{c+c1}{\PYZsh{} interval too narrow or found solution}
+                    \PY{k}{break}
+                
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{e}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{tol} \PY{o+ow}{or} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{fc}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{fb}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} binary search}
+                    \PY{n}{d} \PY{o}{=} \PY{n}{m}\PY{p}{;} \PY{n}{e} \PY{o}{=} \PY{n}{m}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{s} \PY{o}{=} \PY{n}{fb} \PY{o}{/} \PY{n}{fc}
+                    \PY{k}{if} \PY{p}{(}\PY{n}{a} \PY{o}{==} \PY{n}{c}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} tangent method}
+                        \PY{n}{p} \PY{o}{=} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{m} \PY{o}{*} \PY{n}{s}\PY{p}{;} \PY{n}{q} \PY{o}{=} \PY{l+m+mf}{1.0} \PY{o}{\PYZhy{}} \PY{n}{s}
+                    \PY{k}{else}\PY{p}{:} \PY{c+c1}{\PYZsh{} second\PYZhy{}order interpolation}
+                        \PY{n}{q} \PY{o}{=} \PY{n}{fc} \PY{o}{/} \PY{n}{fa}\PY{p}{;} \PY{n}{r} \PY{o}{=} \PY{n}{fb} \PY{o}{/} \PY{n}{fa}
+                        \PY{n}{p} \PY{o}{=} \PY{n}{s} \PY{o}{*} \PY{p}{(}\PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{m} \PY{o}{*} \PY{n}{q} \PY{o}{*} \PY{p}{(}\PY{n}{q} \PY{o}{\PYZhy{}} \PY{n}{r}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{c}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{r} \PY{o}{\PYZhy{}} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+                        \PY{n}{q} \PY{o}{=} \PY{p}{(}\PY{n}{q} \PY{o}{\PYZhy{}} \PY{l+m+mf}{1.0}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{r} \PY{o}{\PYZhy{}} \PY{l+m+mf}{1.0}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{l+m+mf}{1.0}\PY{p}{)}
+                    
+                    \PY{k}{if} \PY{n}{p} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                        \PY{n}{q} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{q}
+                    \PY{k}{else}\PY{p}{:}
+                        \PY{n}{p} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{p}
+                    
+                    \PY{k}{if} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{3.0} \PY{o}{*} \PY{n}{m} \PY{o}{*} \PY{n}{q} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{tol} \PY{o}{*} \PY{n}{q}\PY{p}{)} \PY{o+ow}{and} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{e} \PY{o}{*} \PY{n}{q}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{e} \PY{o}{=} \PY{n}{d}\PY{p}{;} \PY{n}{d} \PY{o}{=} \PY{n}{p} \PY{o}{/} \PY{n}{q} \PY{c+c1}{\PYZsh{} use SOI or tangent if feasible}
+                    \PY{k}{else}\PY{p}{:}
+                        \PY{n}{d} \PY{o}{=} \PY{n}{m}\PY{p}{;} \PY{n}{e} \PY{o}{=} \PY{n}{m}
+                
+                \PY{c+c1}{\PYZsh{} next iteration step}
+                \PY{n}{step} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                \PY{n}{c} \PY{o}{=} \PY{n}{b}\PY{p}{;} \PY{n}{fc} \PY{o}{=} \PY{n}{fb}
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{d}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n}{tol}\PY{p}{:}
+                    \PY{n}{b} \PY{o}{=} \PY{n}{b} \PY{o}{+} \PY{n}{d}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{b} \PY{o}{=} \PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{p}{)} \PY{o}{*} \PY{n}{tol}
+                \PY{n}{fb} \PY{o}{=} \PY{n}{F}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+            
+            \PY{n}{b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{float128}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{zeroin method took }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ steps to solve the equation: }\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{step}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{n}{b}
+\end{Verbatim}
+
+
+    使用上面求结果的方程检验实现的正确性：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{zeroin}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{3} \PY{o}{\PYZhy{}} \PY{n}{x} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{zeroin}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{o}{\PYZhy{}} \PY{n}{x} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{3} \PY{o}{+} \PY{l+m+mi}{5} \PY{o}{*} \PY{n}{x}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+zeroin method took 7 steps to solve the equation: 1.3247
+zeroin method took 6 steps to solve the equation: 2.2361
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} (1.3247179571960474576, 2.2360679775250087431)
+\end{Verbatim}
+            
+    可见算法能够正确进行迭代求解，并且所需的迭代步骤均较少。
+
+下面使用其进行 Bessel 曲线的零点求解。首先定义函数并绘制曲线：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k+kn}{from} \PY{n+nn}{mpmath} \PY{k}{import} \PY{n}{besselj}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        
+        \PY{n}{j0} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{besselj}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{x}\PY{p}{)}
+        
+        \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{40}\PY{p}{,} \PY{l+m+mf}{0.001}\PY{p}{)}
+        \PY{n}{y} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{n}{j0}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bessel Function}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    从图中可以估测前 10 个零点的存在区间，在这些区间上运行 \texttt{zeroin}
+算法得到准确零点：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{intervals} \PY{o}{=} \PY{p}{[}
+            \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{13}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mi}{17}\PY{p}{,} \PY{l+m+mi}{19}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mi}{21}\PY{p}{,} \PY{l+m+mi}{22}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mf}{23.5}\PY{p}{,} \PY{l+m+mi}{25}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mi}{27}\PY{p}{,} \PY{l+m+mi}{28}\PY{p}{)}\PY{p}{,}
+            \PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{31}\PY{p}{)}\PY{p}{,}
+        \PY{p}{]}
+        
+        \PY{n}{zeros} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{k}{for} \PY{n}{interval} \PY{o+ow}{in} \PY{n}{intervals}\PY{p}{:}
+            \PY{n}{zeros}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{zeroin}\PY{p}{(}\PY{n}{j0}\PY{p}{,} \PY{o}{*}\PY{n}{interval}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+zeroin method took 6 steps to solve the equation: 2.4048
+zeroin method took 5 steps to solve the equation: 5.5201
+zeroin method took 5 steps to solve the equation: 8.6537
+zeroin method took 5 steps to solve the equation: 11.7915
+zeroin method took 4 steps to solve the equation: 14.9309
+zeroin method took 4 steps to solve the equation: 18.0711
+zeroin method took 4 steps to solve the equation: 21.2116
+zeroin method took 4 steps to solve the equation: 24.3525
+zeroin method took 4 steps to solve the equation: 27.4935
+zeroin method took 4 steps to solve the equation: 30.6346
+
+    \end{Verbatim}
+
+    将这些点绘制在函数图上验证：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bessel Function}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{k}{for} \PY{n}{zero} \PY{o+ow}{in} \PY{n}{zeros}\PY{p}{:}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{zero}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    可以看到，zeroin 算法正确地求出了该函数的前十个零点。
+
+    \subsubsection{实验结论}\label{ux5b9eux9a8cux7ed3ux8bba}
+
+通过本实验，我学习了函数零点迭代法 \texttt{zeroin}
+的思想，实现了这一算法，并在第一类零阶 Bessel
+函数上使用这一算法进行了零点的求解。这一算法是多种不同迭代法的综合，不需要导数地也能较快、较准确地收敛到函数零点，是一种通用、高效的算法。
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
